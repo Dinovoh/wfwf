@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration xmlns="http://logging.apache.org/log4j/2.0/config">
+
+    <Properties>
+        <Property name="basePath">../homework3/logs</Property>
+    </Properties>
+
+    <Appenders>
+        <!-- File Appender -->
+        <File name="FILE" fileName="${basePath}/logfile.log" append="true">
+            <PatternLayout pattern="%-5p | %d{yyyy-MM-dd HH:mm:ss} | [%t] %C{2} (%F:%L) - %m%n" />
+        </File>
+        <!-- Console Appender -->
+        <Console name="STDOUT" target="SYSTEM_OUT">
+            <PatternLayout pattern="%-5p | %d{yyyy-MM-dd HH:mm:ss} | [%t] %C{2} (%F:%L) - %m%n" />
+        </Console>
+
+        <Routing name="Routing">
+            <Routes>
+                <Script name="RoutingInit" language="JavaScript"><![CDATA[
+                    logEvent.getLevel();]]>
+                </Script>
+                <!--<Route ref="STDOUT" key="ERROR" />-->
+                <Route ref="STDOUT" key="DEBUG" />
+                <Route ref="FILE" key="INFO" />
+                <!--<Route ref="FILE" key="WARN" />-->
+                <!--<Route ref="FILE" key="ERROR" />-->
+                <!--<Route ref="FILE" key="FATAL" />-->
+            </Routes>
+        </Routing>
+
+        <!-- TODO -->
+
+        <!-- HttpAppender -->
+        <!--<Http name="Http" url="https://localhost:9200/test/log4j/">-->
+            <!--<Property name="X-Java-Runtime" value="$${java:runtime}" />-->
+            <!--<JsonLayout properties="true"/>-->
+            <!--<SSL>-->
+                <!--<KeyStore   location="log4j2-keystore.jks" passwordEnvironmentVariable="KEYSTORE_PASSWORD"/>-->
+                <!--<TrustStore location="truststore.jks"      passwordFile="${sys:user.home}/truststore.pwd"/>-->
+            <!--</SSL>-->
+        <!--</Http>-->
+
+    </Appenders>
+
+    <Loggers>
+        <!--<Logger name="com.jcg" level="debug" />-->
+        <Root level="ALL">
+            <!--<AppenderRef ref="STDOUT" />-->
+            <!--<AppenderRef ref="FILE" />-->
+            <AppenderRef ref="Routing" />
+            <!--<AppenderRef ref="Http" />-->
+        </Root>
+        <!--<Root level="error">-->
+            <!--&lt;!&ndash;<AppenderRef ref="STDOUT" />&ndash;&gt;-->
+            <!--<AppenderRef ref="FILE" />-->
+            <!--&lt;!&ndash;<AppenderRef ref="Http" />&ndash;&gt;-->
+        <!--</Root>-->
+    </Loggers>
+
+    <!--<Loggers>-->
+        <!--<Logger name="com1.jcg" level="info" />-->
+        <!--<Root level="error">-->
+            <!--&lt;!&ndash;<AppenderRef ref="STDOUT" />&ndash;&gt;-->
+            <!--<AppenderRef ref="FILE" />-->
+            <!--&lt;!&ndash;<AppenderRef ref="Http" />&ndash;&gt;-->
+        <!--</Root>-->
+    <!--</Loggers>-->
+
+</Configuration>
